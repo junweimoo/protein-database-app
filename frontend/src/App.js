@@ -5,7 +5,30 @@ import ResultsTable from './ResultsTable';
 
 const App = () => {
     const [data, setData] = useState([]);
-    const [filters, setFilters] = useState({});
+    const [filters, setFilters] = useState({
+        protein_name: '',
+        protein_source: '',
+        length_geq: '',
+        length_leq: '',
+        uniprot_id: '',
+        mutation_protein: '',
+        nucleic_acid: '',
+        type_nuc: '',
+        ph_geq: '',
+        ph_leq: '',
+        temperature_geq: '',
+        temperature_leq: '',
+        method: '',
+        dg_wild_geq: '',
+        dg_wild_leq: '',
+        ddg_geq: '',
+        ddg_leq: '',
+        year_geq: '',
+        year_leq: '',
+        authors: '',
+        journal: '',
+        keywords: ''
+    });  
     const [columns, setColumns] = useState({
         id: true,
         protein_name: true,
@@ -40,6 +63,31 @@ const App = () => {
           });
     };
 
+    const resetFields = () => {
+        handleFilterChange('protein_name', '');
+        handleFilterChange('protein_source', '');
+        handleFilterChange('length_geq', '');
+        handleFilterChange('length_leq', '');
+        handleFilterChange('uniprot_id', '');
+        handleFilterChange('mutation_protein', '');
+        handleFilterChange('nucleic_acid', '');
+        handleFilterChange('type_nuc', '');
+        handleFilterChange('ph_geq', '');
+        handleFilterChange('ph_leq', '');
+        handleFilterChange('temperature_geq', '');
+        handleFilterChange('temperature_leq', '');
+        handleFilterChange('method', '');
+        handleFilterChange('dg_wild_geq', '');
+        handleFilterChange('dg_wild_leq', '');
+        handleFilterChange('ddg_geq', '');
+        handleFilterChange('ddg_leq', '');
+        handleFilterChange('year_geq', '');
+        handleFilterChange('year_leq', '');
+        handleFilterChange('authors', '');
+        handleFilterChange('journal', '');
+        handleFilterChange('keywords', '');
+    };  
+
     const handleFilterChange = (column, value) => {
         setFilters(prev => ({ ...prev, [column]: value }));
     };
@@ -51,7 +99,7 @@ const App = () => {
     return (
         <div className="app">
             <h1>Interaction Energy Between Proteins and Nucleic Acids</h1>
-            <FilterMenu onFilterChange={handleFilterChange} onSubmit={fetchData} isErrored={isErrored}/>
+            <FilterMenu filters={filters} onFilterChange={handleFilterChange} onSubmit={fetchData} onReset={resetFields} isErrored={isErrored}/>
             <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} />
         </div>
     );
