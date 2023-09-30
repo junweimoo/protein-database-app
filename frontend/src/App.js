@@ -26,19 +26,19 @@ const App = () => {
         journal: true,
         keywords: true
     });
+    const [isErrored, setIsErrorred] = useState(false);
 
     const fetchData = async () => {
-        console.log('fetching...')
-        try {
-            axios
-              .get('http://localhost:8008/proteins', { params: filters })
-              .then(response => {
-                console.log('test');
-                setData(response.data);
-              });
-        } catch (error) {
+        axios
+          .get('http://localhost:8008/proteins', { params: filters })
+          .then(response => {
+            setData(response.data);
+            setIsErrorred(false);
+          })
+          .catch(error => {
             console.error("Error fetching data:", error);
-        }
+            setIsErrorred(true);
+          });
     };
 
     const handleFilterChange = (column, value) => {
@@ -51,7 +51,7 @@ const App = () => {
 
     return (
         <div className="app">
-            <FilterMenu onFilterChange={handleFilterChange} onSubmit={fetchData}/>
+            <FilterMenu onFilterChange={handleFilterChange} onSubmit={fetchData} isErrored={isErrored}/>
             <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} />
         </div>
     );

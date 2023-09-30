@@ -41,10 +41,11 @@ app.get('/proteins', async (req, res) => {
     if (length_geq) {
         if (!length_leq) {
             isInvalidQuery = true;
+        } else {
+            queryParams.push(length_geq);
+            queryParams.push(length_leq);
+            filterConditions.push(`length >= $${queryParams.length - 1} AND length <= $${queryParams.length}`);
         }
-        queryParams.push(length_geq);
-        queryParams.push(length_leq);
-        filterConditions.push(`length >= $${queryParams.length - 1} AND length <= $${queryParams.length}`);
     }
 
     if (uniprot_id) {
@@ -76,19 +77,21 @@ app.get('/proteins', async (req, res) => {
     if (ph_geq) {
         if (!ph_leq) {
             isInvalidQuery = true;
+        } else {
+            queryParams.push(ph_geq);
+            queryParams.push(ph_leq);
+            filterConditions.push(`ph >= $${queryParams.length - 1} AND ph <= $${queryParams.length}`);
         }
-        queryParams.push(ph_geq);
-        queryParams.push(ph_leq);
-        filterConditions.push(`ph >= $${queryParams.length - 1} AND ph <= $${queryParams.length}`);
     }
 
     if (temperature_geq) {
         if (!temperature_leq) {
             isInvalidQuery = true;
+        } else {
+            queryParams.push(temperature_geq);
+            queryParams.push(temperature_leq);
+            filterConditions.push(`temperature >= $${queryParams.length - 1} AND temperature <= $${queryParams.length}`);
         }
-        queryParams.push(temperature_geq);
-        queryParams.push(temperature_leq);
-        filterConditions.push(`temperature >= $${queryParams.length - 1} AND temperature <= $${queryParams.length}`);
     }
 
     if (method) {
@@ -102,28 +105,31 @@ app.get('/proteins', async (req, res) => {
     if (dg_wild_geq) {
         if (!dg_wild_leq) {
             isInvalidQuery = true;
+        } else {
+            queryParams.push(dg_wild_geq);
+            queryParams.push(dg_wild_leq);
+            filterConditions.push(`dg_wild >= $${queryParams.length - 1} AND dg_wild <= $${queryParams.length}`);
         }
-        queryParams.push(dg_wild_geq);
-        queryParams.push(dg_wild_leq);
-        filterConditions.push(`dg_wild >= $${queryParams.length - 1} AND dg_wild <= $${queryParams.length}`);
     }
 
     if (ddg_geq) {
         if (!ddg_leq) {
             isInvalidQuery = true;
+        } else {
+            queryParams.push(ddg_geq);
+            queryParams.push(ddg_leq);
+            filterConditions.push(`ddg >= $${queryParams.length - 1} AND ddg <= $${queryParams.length}`);
         }
-        queryParams.push(ddg_geq);
-        queryParams.push(ddg_leq);
-        filterConditions.push(`ddg >= $${queryParams.length - 1} AND ddg <= $${queryParams.length}`);
     }
 
     if (year_geq) {
         if (!year_leq) {
             isInvalidQuery = true;
+        } else {
+            queryParams.push(year_geq);
+            queryParams.push(year_leq);
+            filterConditions.push(`year >= $${queryParams.length - 1} AND year <= $${queryParams.length}`);
         }
-        queryParams.push(year_geq);
-        queryParams.push(year_leq);
-        filterConditions.push(`year >= $${queryParams.length - 1} AND year <= $${queryParams.length}`);
     }
 
     if (authors) {
@@ -163,12 +169,14 @@ app.get('/proteins', async (req, res) => {
     if (filterConditions.length > 0) {
         baseQuery += " WHERE " + filterConditions.join(" AND ");
     }
+    baseQuery += " LIMIT 100";
 
     console.log(baseQuery);
 
     if (isInvalidQuery) {
         console.error('Invalid query');
         res.status(500).json({ error: "Bad Request" });
+        return;
     }
 
     try {
