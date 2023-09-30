@@ -1,9 +1,9 @@
-// FilterMenu.js
 import React from 'react';
 
 const FilterMenu = ({ onFilterChange, onSubmit, isErrored }) => {
     return (
         <div className="filter-menu">
+            <h2>Search Query</h2>
             {/* Single input filters */}
             <div>
                 Protein Name:

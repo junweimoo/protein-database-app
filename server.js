@@ -38,19 +38,39 @@ app.get('/proteins', async (req, res) => {
         filterConditions.push(`protein_source ILIKE $${queryParams.length}`);
     }
 
-    if (length_geq) {
-        if (!length_leq) {
-            isInvalidQuery = true;
-        } else {
-            queryParams.push(length_geq);
-            queryParams.push(length_leq);
-            filterConditions.push(`length >= $${queryParams.length - 1} AND length <= $${queryParams.length}`);
-        }
-    }
-
     if (uniprot_id) {
         queryParams.push(uniprot_id);
         filterConditions.push(`uniprot_id = $${queryParams.length}`)
+    }
+
+    if (nucleic_acid) {
+        queryParams.push(`%${nucleic_acid}%`);
+        filterConditions.push(`nucleic_acid ILIKE $${queryParams.length}`);
+    }
+
+    if (authors) {
+        queryParams.push(`%${authors}%`);
+        filterConditions.push(`authors ILIKE $${queryParams.length}`);
+    }
+
+    if (keywords) {
+        queryParams.push(`%${keywords}%`);
+        filterConditions.push(`keywords ILIKE $${queryParams.length}`);
+    }
+
+    if (func) {
+        queryParams.push(func);
+        filterConditions.push(`function = $${queryParams.length}`);
+    }
+
+    if (sequence) {
+        queryParams.push(sequence);
+        filterConditions.push(`sequence = $${queryParams.length}`);
+    }
+
+    if (structure) {
+        queryParams.push(structure);
+        filterConditions.push(`structure = $${queryParams.length}`);
     }
 
     if (mutation_protein) {
@@ -61,17 +81,38 @@ app.get('/proteins', async (req, res) => {
         filterConditions.push(`mutation_protein ILIKE ANY(ARRAY[${placeholders}])`);
     }
 
-    if (nucleic_acid) {
-        queryParams.push(`%${nucleic_acid}%`);
-        filterConditions.push(`nucleic_acid ILIKE $${queryParams.length}`);
-    }
-
     if (type_nuc) {
         const type_nuc_array = type_nuc.split(',').map(name=> `%${name.trim()}%`)
         const placeholders = type_nuc_array.map((name, index) => `$${index + queryParams.length + 1}`).join(', ')
 
         queryParams.push(...type_nuc_array);
         filterConditions.push(`type_nuc ILIKE ANY(ARRAY[${placeholders}])`);
+    }
+
+    if (method) {
+        const method_array = method.split(',').map(name=> `%${name.trim()}%`)
+        const placeholders = method_array.map((name, index) => `$${index + queryParams.length + 1}`).join(', ')
+
+        queryParams.push(...method_array);
+        filterConditions.push(`method ILIKE ANY(ARRAY[${placeholders}])`);
+    }
+
+    if (journal) {
+        const journal_array = journal.split(',').map(name=> `%${name.trim()}%`)
+        const placeholders = journal_array.map((name, index) => `$${index + queryParams.length + 1}`).join(', ')
+
+        queryParams.push(...journal_array);
+        filterConditions.push(`journal ILIKE ANY(ARRAY[${placeholders}])`);
+    }
+
+    if (length_geq) {
+        if (!length_leq) {
+            isInvalidQuery = true;
+        } else {
+            queryParams.push(length_geq);
+            queryParams.push(length_leq);
+            filterConditions.push(`length >= $${queryParams.length - 1} AND length <= $${queryParams.length}`);
+        }
     }
 
     if (ph_geq) {
@@ -92,14 +133,6 @@ app.get('/proteins', async (req, res) => {
             queryParams.push(temperature_leq);
             filterConditions.push(`temperature >= $${queryParams.length - 1} AND temperature <= $${queryParams.length}`);
         }
-    }
-
-    if (method) {
-        const method_array = method.split(',').map(name=> `%${name.trim()}%`)
-        const placeholders = method_array.map((name, index) => `$${index + queryParams.length + 1}`).join(', ')
-
-        queryParams.push(...method_array);
-        filterConditions.push(`method ILIKE ANY(ARRAY[${placeholders}])`);
     }
 
     if (dg_wild_geq) {
@@ -130,39 +163,6 @@ app.get('/proteins', async (req, res) => {
             queryParams.push(year_leq);
             filterConditions.push(`year >= $${queryParams.length - 1} AND year <= $${queryParams.length}`);
         }
-    }
-
-    if (authors) {
-        queryParams.push(`%${authors}%`);
-        filterConditions.push(`authors ILIKE $${queryParams.length}`);
-    }
-
-    if (journal) {
-        const journal_array = journal.split(',').map(name=> `%${name.trim()}%`)
-        const placeholders = journal_array.map((name, index) => `$${index + queryParams.length + 1}`).join(', ')
-
-        queryParams.push(...journal_array);
-        filterConditions.push(`journal ILIKE ANY(ARRAY[${placeholders}])`);
-    }
-
-    if (keywords) {
-        queryParams.push(`%${keywords}%`);
-        filterConditions.push(`keywords ILIKE $${queryParams.length}`);
-    }
-
-    if (func) {
-        queryParams.push(func);
-        filterConditions.push(`function = $${queryParams.length}`);
-    }
-
-    if (sequence) {
-        queryParams.push(sequence);
-        filterConditions.push(`sequence = $${queryParams.length}`);
-    }
-
-    if (structure) {
-        queryParams.push(structure);
-        filterConditions.push(`structure = $${queryParams.length}`);
     }
 
     let baseQuery = "SELECT * FROM proteins";

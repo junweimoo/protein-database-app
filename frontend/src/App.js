@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FilterMenu from './FilterMenu';
@@ -51,6 +50,7 @@ const App = () => {
 
     return (
         <div className="app">
+            <h1>Interaction Energy Between Proteins and Nucleic Acids</h1>
             <FilterMenu onFilterChange={handleFilterChange} onSubmit={fetchData} isErrored={isErrored}/>
             <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} />
         </div>

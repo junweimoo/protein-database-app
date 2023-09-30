@@ -1,9 +1,9 @@
-// ResultsTable.js
 import React from 'react';
 
 const ResultsTable = ({ data, columns, onColumnToggle }) => {
     return (
         <div className="results-table">
+            <h2>Results</h2>
             {/* Toggle visibility of columns */}
             <div className="column-toggle">
                 {Object.keys(columns).map(column => (
