@@ -4,6 +4,8 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const app = express();
+app.use(cors());
+
 const PORT = 8008;
 const pool = new Pool({
     user: process.env.DB_USER,
@@ -178,7 +180,6 @@ app.get('/proteins', async (req, res) => {
     }
 });
 
-app.use(cors());
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
