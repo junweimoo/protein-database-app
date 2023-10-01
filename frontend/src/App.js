@@ -53,18 +53,21 @@ const App = () => {
         keywords: true
     });
     const [isErrored, setIsErrorred] = useState(false);
+    const [page, setPage] = useState(0)
+    const [entriesPerPage, setEntriesPerPage] = useState(100)
 
     const fetchData = async () => {
-        axios
-          .get('http://localhost:8008/proteins', { params: filters })
-          .then(response => {
-            setData(response.data);
-            setIsErrorred(false);
-          })
-          .catch(error => {
-            console.error("Error fetching data:", error);
-            setIsErrorred(true);
-          });
+      setPage(0);
+      axios
+        .get('http://localhost:8008/proteins', { params: filters })
+        .then(response => {
+          setData(response.data);
+          setIsErrorred(false);
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+          setIsErrorred(true);
+        });
     };
 
     const resetFields = () => {
@@ -120,7 +123,7 @@ const App = () => {
             <div className='pt-1 d-flex justify-content-center'>
               {isErrored && "ERROR"}
             </div>
-            <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} />
+            <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage}/>
         </div>
     );
 };

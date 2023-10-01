@@ -40,9 +40,7 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
 }
 
 
-const ResultsTable = ({ data, columns, onColumnToggle }) => {
-    const [page, setPage] = useState(0)
-    const [entriesPerPage, setEntriesPerPage] = useState(100)
+const ResultsTable = ({ page, setPage, entriesPerPage, setEntriesPerPage, data, columns, onColumnToggle }) => {
 
     let firstDisplayedIndex = page * entriesPerPage;
     let lastDisplayedIndex = Math.min(page * entriesPerPage + entriesPerPage, data.length)
