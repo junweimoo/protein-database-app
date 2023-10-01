@@ -4,20 +4,6 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
     return (
         <div className="results-table">
             <h2>Results</h2>
-            {/* Toggle visibility of columns */}
-            <div className="column-toggle">
-                {Object.keys(columns).map(column => (
-                    <label key={column}>
-                        <input 
-                            type="checkbox" 
-                            checked={columns[column]} 
-                            onChange={() => onColumnToggle(column)} 
-                        />
-                        {column.replace(/_/g, ' ')}
-                    </label>
-                ))}
-            </div>
-
             {/* Display data */}
             <table>
                 <thead>
@@ -42,7 +28,7 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map(row => (
+                    {data.map((row, index) => (
                         <tr key={row.id}>
                             {columns.id && <td>{row.id}</td>}
                             {columns.protein_name && <td>{row.protein_name}</td>}
@@ -65,6 +51,7 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
                     ))}
                 </tbody>
             </table>
+            <h4>Number of hits: {data.length}</h4>
         </div>
     );
 };

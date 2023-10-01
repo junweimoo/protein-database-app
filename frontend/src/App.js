@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FilterMenu from './FilterMenu';
 import ResultsTable from './ResultsTable';
+import DisplayOptionsMenu from './DisplayOptionsMenu';
 
 const App = () => {
     const [data, setData] = useState([]);
@@ -27,7 +28,8 @@ const App = () => {
         year_leq: '',
         authors: '',
         journal: '',
-        keywords: ''
+        keywords: '',
+        sort_type: 'none',
     });  
     const [columns, setColumns] = useState({
         id: true,
@@ -86,7 +88,13 @@ const App = () => {
         handleFilterChange('authors', '');
         handleFilterChange('journal', '');
         handleFilterChange('keywords', '');
+        handleFilterChange('sort_type', 'none')
+        handleFilterChange('sort_by_column', null)
     };  
+
+    const selectAllColumns = () => {
+
+    }
 
     const handleFilterChange = (column, value) => {
         setFilters(prev => ({ ...prev, [column]: value }));
@@ -100,6 +108,12 @@ const App = () => {
         <div className="app">
             <h1>Interaction Energy Between Proteins and Nucleic Acids</h1>
             <FilterMenu filters={filters} onFilterChange={handleFilterChange} onSubmit={fetchData} onReset={resetFields} isErrored={isErrored}/>
+            <DisplayOptionsMenu filters={filters} onFilterChange={handleFilterChange} columns={columns} onColumnToggle={handleColumnToggle} />
+            <br/><br/>
+            <div className='query-form-buttons'>
+              <button onClick={fetchData}>Submit</button>
+              <button onClick={resetFields}>Reset</button>
+            </div>
             <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} />
         </div>
     );

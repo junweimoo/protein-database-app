@@ -21,7 +21,7 @@ pool.on('error', (err, client) => {
 });
 
 app.get('/proteins', async (req, res) => {
-    const { protein_name, protein_source, length_geq, length_leq, uniprot_id, mutation_protein, nucleic_acid, type_nuc, ph_geq, ph_leq, temperature_geq, temperature_leq, method, dg_wild_geq, dg_wild_leq, ddg_geq, ddg_leq, year_geq, year_leq, authors, journal, keywords, function: func, sequence, structure } = req.query;
+    const { sort_type, sort_by_column, protein_name, protein_source, length_geq, length_leq, uniprot_id, mutation_protein, nucleic_acid, type_nuc, ph_geq, ph_leq, temperature_geq, temperature_leq, method, dg_wild_geq, dg_wild_leq, ddg_geq, ddg_leq, year_geq, year_leq, authors, journal, keywords, function: func, sequence, structure } = req.query;
 
     let queryParams = [];
     let filterConditions = [];
@@ -169,6 +169,15 @@ app.get('/proteins', async (req, res) => {
     if (filterConditions.length > 0) {
         baseQuery += " WHERE " + filterConditions.join(" AND ");
     }
+
+    if (sort_by_column) {
+        if (sort_type == 'asc') {
+            baseQuery += ` ORDER BY ${sort_by_column}`
+        } else if (sort_type == 'desc') {
+            baseQuery += ` ORDER BY ${sort_by_column} DESC`
+        }
+    }
+
     baseQuery += " LIMIT 100";
 
     console.log(baseQuery);

@@ -193,8 +193,6 @@ const FilterMenu = ({ filters, onFilterChange, onSubmit, onReset, isErrored }) =
             </div>
 
 
-            <button onClick={onSubmit}>Submit</button>
-            <button onClick={onReset}>Reset</button>
 
             <div>{isErrored && "ERROR"}</div>
         </div>
