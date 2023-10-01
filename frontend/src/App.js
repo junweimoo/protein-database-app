@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import FilterMenu from './FilterMenu';
 import ResultsTable from './ResultsTable';
@@ -93,11 +93,7 @@ const App = () => {
         handleFilterChange('sort_type', 'none')
         handleFilterChange('sort_by_column', null)
     };  
-
-    const selectAllColumns = () => {
-
-    }
-
+    
     const handleFilterChange = (column, value) => {
         setFilters(prev => ({ ...prev, [column]: value }));
     };

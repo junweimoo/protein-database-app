@@ -1,9 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const ResultsTable = ({ data, columns, onColumnToggle }) => {
+    const [page, setPage] = useState(0)
+    const [entriesPerPage, setEntriesPerPage] = useState(100)
+
+    let firstDisplayedIndex = page * entriesPerPage;
+    let lastDisplayedIndex = Math.min(page * entriesPerPage + entriesPerPage, data.length)
+
     return (
         <div className="results-table">
             <h2>Results</h2>
+            <div className="col pb-2">
+                <h5>Displaying {data.length === 0 ? 0 : firstDisplayedIndex + 1} to {lastDisplayedIndex} out of {data.length} entries</h5>
+                <select 
+                    className='dropdown'
+                    onChange={e => {
+                        setEntriesPerPage(parseInt(e.target.value));
+                        setPage(0);
+                }}>
+                    <option value={100}>100 per page</option>
+                    <option value={75}>75 per page</option>
+                    <option value={50}>50 per page</option>
+                    <option value={25}>25 per page</option>
+                </select>
+                <button 
+                    className='mx-1' 
+                    onClick={e => setPage(Math.max(0, page - 1))}>
+                    Previous Page
+                </button>
+                <button 
+                    className='mx-1' 
+                    onClick={e => {
+                        if (lastDisplayedIndex !== data.length) {
+                            setPage(page + 1);
+                        }
+                    }}>
+                    Next Page
+                </button>
+            </div>
             <table className="table table-bordered">
                 <thead>
                     <tr>
@@ -27,7 +63,9 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((row, index) => (
+                    {data
+                        .slice(firstDisplayedIndex, lastDisplayedIndex)
+                        .map((row, index) => (
                         <tr key={row.id}>
                             {columns.id && <td>{row.id}</td>}
                             {columns.protein_name && <td>{row.protein_name}</td>}

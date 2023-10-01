@@ -178,7 +178,7 @@ app.get('/proteins', async (req, res) => {
         }
     }
 
-    baseQuery += " LIMIT 100";
+    // baseQuery += " LIMIT 100";
 
     console.log(baseQuery);
 
