@@ -49,11 +49,14 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
 
     return (
         <div className="results-table">
-            <h2>Results</h2>
-            <div className="col pb-2">
+            <h2 className="component-title">Results</h2>
+            <div className="mx-2">
                 <h5>Displaying {data.length === 0 ? 0 : firstDisplayedIndex + 1} to {lastDisplayedIndex} out of {data.length} entries</h5>
+                
+            </div>
+            <div className='row pb-3 mx-1'>
                 <select 
-                    className='dropdown'
+                    className='select-dropdown form-select w-auto mx-1'
                     onChange={e => {
                         setEntriesPerPage(parseInt(e.target.value));
                         setPage(0);
@@ -64,12 +67,12 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
                     <option value={25}>25 per page</option>
                 </select>
                 <button 
-                    className='mx-1' 
+                    className='mx-1 btn btn-primary w-auto' 
                     onClick={e => setPage(Math.max(0, page - 1))}>
                     Previous Page
                 </button>
                 <button 
-                    className='mx-1' 
+                    className='mx-1 btn btn-primary w-auto' 
                     onClick={e => {
                         if (lastDisplayedIndex !== data.length) {
                             setPage(page + 1);
@@ -78,7 +81,7 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
                     Next Page
                 </button>
                 <button 
-                    className='mx-1' 
+                    className='mx-1 btn btn-info w-auto' 
                     onClick={e => {
                         JSONToCSVConvertor(data, "proteinExportData", true);
                     }}>

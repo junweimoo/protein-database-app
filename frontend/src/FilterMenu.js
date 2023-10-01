@@ -3,7 +3,7 @@ import React from 'react';
 const FilterMenu = ({ filters, onFilterChange, onSubmit, onReset, isErrored }) => {
     return (
         <div className="filter-menu form-control">
-            <h2>Search Query</h2>
+            <h2 className="component-title">Search Query</h2>
             <div className="row mb-2">
                 <div className="form-group row">
                     <label className="col-sm-4 col-form-label">Protein Name:</label>

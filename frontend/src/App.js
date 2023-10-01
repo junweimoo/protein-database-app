@@ -113,9 +113,9 @@ const App = () => {
                 <DisplayOptionsMenu filters={filters} onFilterChange={handleFilterChange} columns={columns} onColumnToggle={handleColumnToggle} />
               </div>
             </div>
-            <div className='query-form-buttons d-flex justify-content-center pt-3'>
-              <button className='mx-1' onClick={fetchData}>Submit</button>
-              <button className='mx-1' onClick={resetFields}>Reset</button>
+            <div className='query-form-buttons d-flex justify-content-center pt-3 pb-2'>
+              <button className='mx-1 btn btn-success' onClick={fetchData}>Submit</button>
+              <button className='mx-1 btn btn-primary' onClick={resetFields}>Reset</button>
             </div>
             <div className='pt-1 d-flex justify-content-center'>
               {isErrored && "ERROR"}

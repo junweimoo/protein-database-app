@@ -3,7 +3,7 @@ import React from 'react';
 const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }) => {
     return (
         <div className="display-options-menu form-control">
-            <h2>Display Options</h2>
+            <h2 className="component-title">Display Options</h2>
             <h4 className='pt-3'>Columns to show:</h4>
             <div className="column-toggle column">
                 {Object.keys(columns).map(column => (

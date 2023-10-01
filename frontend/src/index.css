@@ -15,3 +15,12 @@ code {
 .app {
   padding: 15px;
 }
+
+.component-title {
+  background-color: aliceblue;
+  padding-inline: 7px;
+}
+
+.select-dropdown {
+  width: 120px;
+}
