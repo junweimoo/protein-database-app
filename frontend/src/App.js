@@ -93,7 +93,7 @@ const App = () => {
         handleFilterChange('sort_type', 'none')
         handleFilterChange('sort_by_column', null)
     };  
-    
+
     const handleFilterChange = (column, value) => {
         setFilters(prev => ({ ...prev, [column]: value }));
     };

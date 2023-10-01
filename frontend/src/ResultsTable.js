@@ -2,6 +2,44 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
+    var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+    var CSV = '';    
+    if (ShowLabel) {
+        var row = "";
+        for (var index in arrData[0]) {
+            row += index + ',';
+        }
+        row = row.slice(0, -1);
+        CSV += row + '\r\n';
+    }
+    for (var i = 0; i < arrData.length; i++) {
+        var rowb = "";
+        for (var indexb in arrData[i]) {
+            rowb += '"' + arrData[i][indexb] + '",';
+        }
+        rowb.slice(0, rowb.length - 1);
+        CSV += rowb + '\r\n';
+    }
+    if (CSV === '') {        
+        alert("Invalid data");
+        return;
+    }   
+    var fileName = ReportTitle.replace(/ /g,"_");   
+    var blob = new Blob([CSV], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement("a");
+    if (link.download !== undefined) {
+        var url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", fileName);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+
 const ResultsTable = ({ data, columns, onColumnToggle }) => {
     const [page, setPage] = useState(0)
     const [entriesPerPage, setEntriesPerPage] = useState(100)
@@ -38,6 +76,13 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
                         }
                     }}>
                     Next Page
+                </button>
+                <button 
+                    className='mx-1' 
+                    onClick={e => {
+                        JSONToCSVConvertor(data, "proteinExportData", true);
+                    }}>
+                    Download CSV
                 </button>
             </div>
             <table className="table table-bordered">
@@ -88,7 +133,6 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
                     ))}
                 </tbody>
             </table>
-            <h4>Number of hits: {data.length}</h4>
         </div>
     );
 };
