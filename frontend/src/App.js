@@ -3,6 +3,8 @@ import axios from 'axios';
 import FilterMenu from './FilterMenu';
 import ResultsTable from './ResultsTable';
 import DisplayOptionsMenu from './DisplayOptionsMenu';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const App = () => {
     const [data, setData] = useState([]);
@@ -106,13 +108,21 @@ const App = () => {
 
     return (
         <div className="app">
-            <h1>Interaction Energy Between Proteins and Nucleic Acids</h1>
-            <FilterMenu filters={filters} onFilterChange={handleFilterChange} onSubmit={fetchData} onReset={resetFields} isErrored={isErrored}/>
-            <DisplayOptionsMenu filters={filters} onFilterChange={handleFilterChange} columns={columns} onColumnToggle={handleColumnToggle} />
-            <br/><br/>
-            <div className='query-form-buttons'>
-              <button onClick={fetchData}>Submit</button>
-              <button onClick={resetFields}>Reset</button>
+            <h1 className='d-flex justify-content-center '>Interaction Energy Between Proteins and Nucleic Acids</h1>
+            <div className="row pt-2">
+              <div className="col-sm-6 d-flex">
+                <FilterMenu filters={filters} onFilterChange={handleFilterChange} onSubmit={fetchData} onReset={resetFields} isErrored={isErrored}/>
+              </div>
+              <div className="col-sm-6 d-flex">
+                <DisplayOptionsMenu filters={filters} onFilterChange={handleFilterChange} columns={columns} onColumnToggle={handleColumnToggle} />
+              </div>
+            </div>
+            <div className='query-form-buttons d-flex justify-content-center pt-3'>
+              <button className='mx-1' onClick={fetchData}>Submit</button>
+              <button className='mx-1' onClick={resetFields}>Reset</button>
+            </div>
+            <div className='pt-1 d-flex justify-content-center'>
+              {isErrored && "ERROR"}
             </div>
             <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} />
         </div>

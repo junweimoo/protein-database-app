@@ -4,8 +4,7 @@ const ResultsTable = ({ data, columns, onColumnToggle }) => {
     return (
         <div className="results-table">
             <h2>Results</h2>
-            {/* Display data */}
-            <table>
+            <table className="table table-bordered">
                 <thead>
                     <tr>
                         {columns.id && <th>ID</th>}
