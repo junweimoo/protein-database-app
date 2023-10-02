@@ -123,7 +123,7 @@ const App = () => {
             <div className='pt-1 d-flex justify-content-center'>
               {isErrored && "ERROR"}
             </div>
-            <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage}/>
+            {data.length > 0 && <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage}/>}
         </div>
     );
 };

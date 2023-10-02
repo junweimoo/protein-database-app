@@ -3,7 +3,7 @@ import React from 'react';
 const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }) => {
     return (
         <div className="display-options-menu form-control">
-            <h2 className="component-title">Display Options</h2>
+            <h2 className="component-title text-center">Display Options</h2>
             <h4 className='pt-3'>Columns to show:</h4>
             <div className="column-toggle column">
                 {Object.keys(columns).map(column => (
@@ -29,6 +29,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                     <div className='col-sm-10'>
                         <label className='mx-1'>
                             <input
+                                className='mx-1'
                                 type="radio"
                                 value="descending"
                                 checked={filters['sort_type']==='none'}
@@ -41,6 +42,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                         </label>
                         <label className='mx-1'>
                             <input
+                                className='mx-1'
                                 type="radio"
                                 value="ascending"
                                 checked={filters['sort_type']==='asc'}
@@ -50,6 +52,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                         </label>
                         <label className='mx-1'>
                             <input
+                                className='mx-1'
                                 type="radio"
                                 value="descending"
                                 checked={filters['sort_type']==='desc'}
@@ -67,6 +70,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
 
                     <label className='mx-1'>
                         <input
+                            className='mx-1'
                             type="radio"
                             value="Length"
                             checked={filters['sort_by_column']==='length'}
@@ -77,6 +81,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                     </label>
                     <label className='mx-1'>
                         <input
+                            className='mx-1'
                             type="radio"
                             value="descending"
                             checked={filters['sort_by_column']==='ph'}
@@ -87,6 +92,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                     </label>
                     <label className='mx-1'>
                         <input
+                            className='mx-1'
                             type="radio"
                             value="Temperature"
                             checked={filters['sort_by_column']==='temperature'}
@@ -97,6 +103,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                     </label>
                     <label className='mx-1'>
                         <input
+                            className='mx-1'
                             type="radio"
                             value="ΔG Wild"
                             checked={filters['sort_by_column']==='dg_wild'}
@@ -107,6 +114,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                     </label>
                     <label className='mx-1'>
                         <input
+                            className='mx-1'
                             type="radio"
                             value="ΔΔG"
                             checked={filters['sort_by_column']==='ddg'}
@@ -117,6 +125,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                     </label>
                     <label className='mx-1'>
                         <input
+                            className='mx-1'
                             type="radio"
                             value="Year"
                             checked={filters['sort_by_column']==='year'}
@@ -127,6 +136,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
                     </label>
                     <label className='mx-1'>
                         <input
+                            className='mx-1'
                             type="radio"
                             value="id"
                             checked={filters['sort_by_column']==='id'}

@@ -47,7 +47,7 @@ const ResultsTable = ({ page, setPage, entriesPerPage, setEntriesPerPage, data, 
 
     return (
         <div className="results-table">
-            <h2 className="component-title">Results</h2>
+            <h2 className="component-title text-center">Results</h2>
             <div className="mx-2">
                 <h5>Displaying {data.length === 0 ? 0 : firstDisplayedIndex + 1} to {lastDisplayedIndex} out of {data.length} entries</h5>
                 
