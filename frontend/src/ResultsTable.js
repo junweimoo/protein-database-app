@@ -87,7 +87,7 @@ const ResultsTable = ({ page, setPage, entriesPerPage, setEntriesPerPage, data, 
                 </button>
             </div>
             <table className="table table-bordered">
-                <thead>
+                <thead className="light-blue-bg">
                     <tr>
                         {columns.id && <th>ID</th>}
                         {columns.protein_name && <th>Protein Name</th>}

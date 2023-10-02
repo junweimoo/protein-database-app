@@ -5,6 +5,7 @@ import ResultsTable from './ResultsTable';
 import DisplayOptionsMenu from './DisplayOptionsMenu';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { AccordionCollapse, Collapse } from 'react-bootstrap';
 
 const App = () => {
     const [data, setData] = useState([]);
@@ -55,9 +56,11 @@ const App = () => {
     const [isErrored, setIsErrorred] = useState(false);
     const [page, setPage] = useState(0)
     const [entriesPerPage, setEntriesPerPage] = useState(100)
+    const [showMenu, setShowMenu] = useState(true);
 
     const fetchData = async () => {
       setPage(0);
+      setShowMenu(false);
       axios
         .get('http://localhost:8008/proteins', { params: filters })
         .then(response => {
@@ -108,21 +111,29 @@ const App = () => {
     return (
         <div className="app">
             <h1 className='d-flex justify-content-center '>Interaction Energy Between Proteins and Nucleic Acids</h1>
-            <div className="row pt-2">
-              <div className="col-sm-6 d-flex">
-                <FilterMenu filters={filters} onFilterChange={handleFilterChange} onSubmit={fetchData} onReset={resetFields} isErrored={isErrored}/>
-              </div>
-              <div className="col-sm-6 d-flex">
-                <DisplayOptionsMenu filters={filters} onFilterChange={handleFilterChange} columns={columns} onColumnToggle={handleColumnToggle} />
-              </div>
+            <div className='text-center pb-3'>
+              {showMenu
+              ? <button className='mx-1 btn btn-primary' onClick={e => setShowMenu(false)}>Hide Menu</button>
+              : <button className='mx-1 btn btn-primary' onClick={e => setShowMenu(true)}>Show Menu</button>}
             </div>
-            <div className='query-form-buttons d-flex justify-content-center pt-3 pb-2'>
-              <button className='mx-1 btn btn-success' onClick={fetchData}>Submit</button>
-              <button className='mx-1 btn btn-primary' onClick={resetFields}>Reset</button>
-            </div>
-            <div className='pt-1 d-flex justify-content-center'>
-              {isErrored && "ERROR"}
-            </div>
+            {showMenu 
+            && <div>
+                <div className="row">
+                  <div className="col-sm-6 d-flex">
+                    <FilterMenu filters={filters} onFilterChange={handleFilterChange} onSubmit={fetchData} onReset={resetFields} isErrored={isErrored}/>
+                  </div>
+                  <div className="col-sm-6 d-flex">
+                    <DisplayOptionsMenu filters={filters} onFilterChange={handleFilterChange} columns={columns} onColumnToggle={handleColumnToggle} />
+                  </div>
+                </div>
+                <div className='query-form-buttons d-flex justify-content-center pt-3 pb-2'>
+                  <button className='mx-1 btn btn-success' onClick={fetchData}>Submit</button>
+                  <button className='mx-1 btn btn-primary' onClick={resetFields}>Reset</button>
+                </div>
+                <div className='pt-1 d-flex justify-content-center'>
+                  {isErrored && "ERROR"}
+                </div>
+              </div>}
             {data.length > 0 && <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage}/>}
         </div>
     );
