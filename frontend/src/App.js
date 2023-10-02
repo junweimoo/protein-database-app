@@ -5,7 +5,6 @@ import ResultsTable from './ResultsTable';
 import DisplayOptionsMenu from './DisplayOptionsMenu';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { AccordionCollapse, Collapse } from 'react-bootstrap';
 
 const App = () => {
     const [data, setData] = useState([]);

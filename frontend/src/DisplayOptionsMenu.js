@@ -7,7 +7,7 @@ const DisplayOptionsMenu = ({ filters, onFilterChange, columns, onColumnToggle }
             <h4 className='pt-3'>Columns to show:</h4>
             <div className="column-toggle column">
                 {Object.keys(columns).map(column => (
-                    <div>
+                    <div key={column}>
                         <label key={column}>
                             <input 
                                 className='mx-1'
