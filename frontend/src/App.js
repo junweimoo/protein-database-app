@@ -56,10 +56,12 @@ const App = () => {
     const [page, setPage] = useState(0)
     const [entriesPerPage, setEntriesPerPage] = useState(100)
     const [showMenu, setShowMenu] = useState(true);
+    const [hasSearched, setHasSearched] = useState(false);
 
     const fetchData = async () => {
       setPage(0);
       setShowMenu(false);
+      setHasSearched(true);
       axios
         .get('http://localhost:8008/proteins', { params: filters })
         .then(response => {
@@ -133,7 +135,7 @@ const App = () => {
                   {isErrored && "ERROR"}
                 </div>
               </div>}
-            {data.length > 0 && <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage}/>}
+            {hasSearched && <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage}/>}
         </div>
     );
 };
