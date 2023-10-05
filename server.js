@@ -105,9 +105,13 @@ app.get('/proteins', async (req, res) => {
         filterConditions.push(`journal ILIKE ANY(ARRAY[${placeholders}])`);
     }
 
-    if (length_geq) {
+    if (length_geq || length_leq) {
         if (!length_leq) {
-            isInvalidQuery = true;
+            queryParams.push(length_geq);
+            filterConditions.push(`length >= $${queryParams.length - 1}`);
+        } else if (!length_geq) {
+            queryParams.push(length_leq);
+            filterConditions.push(`length <= $${queryParams.length}`);
         } else {
             queryParams.push(length_geq);
             queryParams.push(length_leq);
@@ -115,9 +119,13 @@ app.get('/proteins', async (req, res) => {
         }
     }
 
-    if (ph_geq) {
+    if (ph_geq || ph_leq) {
         if (!ph_leq) {
-            isInvalidQuery = true;
+            queryParams.push(ph_geq);
+            filterConditions.push(`ph >= $${queryParams.length - 1}`);
+        } else if (!ph_geq) {
+            queryParams.push(ph_leq);
+            filterConditions.push(`ph <= $${queryParams.length}`);
         } else {
             queryParams.push(ph_geq);
             queryParams.push(ph_leq);
@@ -125,9 +133,13 @@ app.get('/proteins', async (req, res) => {
         }
     }
 
-    if (temperature_geq) {
+    if (temperature_geq || temperature_leq) {
         if (!temperature_leq) {
-            isInvalidQuery = true;
+            queryParams.push(temperature_geq);
+            filterConditions.push(`temperature >= $${queryParams.length - 1}`);
+        } else if (!temperature_geq) {
+            queryParams.push(temperature_leq);
+            filterConditions.push(`temperature <= $${queryParams.length}`);
         } else {
             queryParams.push(temperature_geq);
             queryParams.push(temperature_leq);
@@ -135,9 +147,13 @@ app.get('/proteins', async (req, res) => {
         }
     }
 
-    if (dg_wild_geq) {
+    if (dg_wild_geq || dg_wild_leq) {
         if (!dg_wild_leq) {
-            isInvalidQuery = true;
+            queryParams.push(dg_wild_geq);
+            filterConditions.push(`dg_wild >= $${queryParams.length - 1}`);
+        } else if (!dg_wild_geq) {
+            queryParams.push(dg_wild_leq);
+            filterConditions.push(`dg_wild <= $${queryParams.length}`);
         } else {
             queryParams.push(dg_wild_geq);
             queryParams.push(dg_wild_leq);
@@ -145,9 +161,13 @@ app.get('/proteins', async (req, res) => {
         }
     }
 
-    if (ddg_geq) {
+    if (ddg_geq || ddg_leq) {
         if (!ddg_leq) {
-            isInvalidQuery = true;
+            queryParams.push(ddg_geq);
+            filterConditions.push(`ddg >= $${queryParams.length - 1}`);
+        } else if (!ddg_geq) {
+            queryParams.push(ddg_leq);
+            filterConditions.push(`ddg <= $${queryParams.length}`);
         } else {
             queryParams.push(ddg_geq);
             queryParams.push(ddg_leq);
@@ -155,9 +175,13 @@ app.get('/proteins', async (req, res) => {
         }
     }
 
-    if (year_geq) {
+    if (year_geq || year_leq) {
         if (!year_leq) {
-            isInvalidQuery = true;
+            queryParams.push(year_geq);
+            filterConditions.push(`year >= $${queryParams.length - 1}`);
+        } else if (!year_geq) {
+            queryParams.push(year_leq);
+            filterConditions.push(`year <= $${queryParams.length}`);
         } else {
             queryParams.push(year_geq);
             queryParams.push(year_leq);
@@ -190,6 +214,7 @@ app.get('/proteins', async (req, res) => {
 
     try {
         const results = await pool.query(baseQuery, queryParams);
+        await new Promise(resolve => setTimeout(resolve, 1000));
         res.json(results.rows);
     } catch (err) {
         console.error(err);

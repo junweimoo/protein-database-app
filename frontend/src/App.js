@@ -131,10 +131,10 @@ const App = () => {
                   <button className='mx-1 btn btn-success' onClick={fetchData}>Submit</button>
                   <button className='mx-1 btn btn-primary' onClick={resetFields}>Reset</button>
                 </div>
-                <div className='pt-1 d-flex justify-content-center'>
-                  {isErrored && "ERROR"}
-                </div>
               </div>}
+            <div className='pt-1 d-flex justify-content-center'>
+              {isErrored && "ERROR"}
+            </div>
             {hasSearched && <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage}/>}
         </div>
     );

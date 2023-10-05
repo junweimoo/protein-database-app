@@ -48,7 +48,6 @@ const ResultsTable = ({ page, setPage, entriesPerPage, setEntriesPerPage, data, 
             <h2 className="component-title text-center">Results</h2>
             <div className="mx-2">
                 <h5>Displaying {data.length === 0 ? 0 : firstDisplayedIndex + 1} to {lastDisplayedIndex} out of {data.length} entries</h5>
-                
             </div>
             <div className='row pb-3 mx-1'>
                 <select 
