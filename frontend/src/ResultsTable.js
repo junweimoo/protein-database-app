@@ -38,7 +38,7 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
 }
 
 
-const ResultsTable = ({ page, setPage, entriesPerPage, setEntriesPerPage, data, columns, onColumnToggle }) => {
+const ResultsTable = ({ page, setPage, entriesPerPage, setEntriesPerPage, data, columns, onColumnToggle, isLoading }) => {
 
     let firstDisplayedIndex = page * entriesPerPage;
     let lastDisplayedIndex = Math.min(page * entriesPerPage + entriesPerPage, data.length)
@@ -83,7 +83,11 @@ const ResultsTable = ({ page, setPage, entriesPerPage, setEntriesPerPage, data, 
                     Download CSV
                 </button>
             </div>
-            <table className="table table-bordered">
+            {isLoading 
+            ? <div className='mx-1 w-auto text-center'>
+                {isLoading ? 'Loading...' : ''}
+            </div>
+            : <table className="table table-bordered">
                 <thead className="light-blue-bg">
                     <tr>
                         {columns.id && <th>ID</th>}
@@ -130,7 +134,7 @@ const ResultsTable = ({ page, setPage, entriesPerPage, setEntriesPerPage, data, 
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table>}
         </div>
     );
 };

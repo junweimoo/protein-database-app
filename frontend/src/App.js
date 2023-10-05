@@ -57,19 +57,23 @@ const App = () => {
     const [entriesPerPage, setEntriesPerPage] = useState(100)
     const [showMenu, setShowMenu] = useState(true);
     const [hasSearched, setHasSearched] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const fetchData = async () => {
       setPage(0);
       setShowMenu(false);
       setHasSearched(true);
+      setIsLoading(true);
       axios
         .get('http://localhost:8008/proteins', { params: filters })
         .then(response => {
           setData(response.data);
+          setIsLoading(false);
           setIsErrorred(false);
         })
         .catch(error => {
           console.error("Error fetching data:", error);
+          setIsLoading(false);
           setIsErrorred(true);
         });
     };
@@ -135,7 +139,7 @@ const App = () => {
             <div className='pt-1 d-flex justify-content-center'>
               {isErrored && "ERROR"}
             </div>
-            {hasSearched && <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage}/>}
+            {hasSearched && <ResultsTable data={data} columns={columns} onColumnToggle={handleColumnToggle} page={page} setPage={setPage} entriesPerPage={entriesPerPage} setEntriesPerPage={setEntriesPerPage} isLoading={isLoading}/>}
         </div>
     );
 };

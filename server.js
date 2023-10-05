@@ -214,7 +214,7 @@ app.get('/proteins', async (req, res) => {
 
     try {
         const results = await pool.query(baseQuery, queryParams);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // await new Promise(resolve => setTimeout(resolve, 1000));
         res.json(results.rows);
     } catch (err) {
         console.error(err);
